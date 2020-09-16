@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">MeetTheTeam</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="textName">What\'s your name ?</string>
+    <string name="textPosition">What\'s your position title ?</string>
+    <string name="position">Position Title</string>
+    <string name="textEmailPassword">Email &amp; Password</string>
+    <string name="textVerification">Email has been sent for verification !</string>
+    <string name="textResend">Resend</string>
+</resources>
