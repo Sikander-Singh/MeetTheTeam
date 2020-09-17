@@ -1,4 +1,4 @@
-package com.sikander.meettheteam;
+package com.sikander.meettheteam.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,11 +6,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+
+import com.sikander.meettheteam.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
     Button next;
     Button back;
+    EditText fname,lname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,7 +23,11 @@ public class RegisterActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                fname=findViewById(R.id.fName);
+                lname=findViewById(R.id.lName);
                 Intent intent=new Intent(RegisterActivity.this,RegisterTitleActivity.class);
+                String fullName=fname.getText()+" "+lname.getText();
+                intent.putExtra("full_name",fullName);
                 startActivity(intent);
             }
         });

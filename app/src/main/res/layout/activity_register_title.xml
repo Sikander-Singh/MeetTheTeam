@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
+    tools:context=".activities.RegisterActivity">
     <Button
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:id="@+id/back"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:background="@drawable/baseline_keyboard_backspace_24"
         android:backgroundTint="@color/colorBlack"
         >
@@ -29,7 +29,7 @@
         tools:ignore="TextViewEdits">
     </TextView>
     <EditText
-        android:id="@+id/fName"
+        android:id="@+id/memberPosition"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

@@ -1,4 +1,4 @@
-package com.sikander.meettheteam;
+package com.sikander.meettheteam.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,27 +6,29 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
-public class RegisterFinalActivity extends AppCompatActivity {
+import com.sikander.meettheteam.R;
 
+public class MemberActivity extends AppCompatActivity {
     Button back;
-    Button next;
+    ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_final);
+        setContentView(R.layout.activity_member);
         back=findViewById(R.id.back);
+        imageView=findViewById(R.id.memberImage);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-        next=findViewById(R.id.next);
-        next.setOnClickListener(new View.OnClickListener() {
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(RegisterFinalActivity.this,VerificationActivity.class);
+                Intent intent=new Intent(MemberActivity.this,ViewImageActivity.class);
                 startActivity(intent);
             }
         });

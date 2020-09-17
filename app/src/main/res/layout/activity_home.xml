@@ -1,9 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity">
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    tools:context=".activities.HomeActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorWhite"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.ActionBar">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/title"
+            android:textSize="25sp"
+            android:textColor="@color/colorBlack"
+            android:text="@string/teamMate"
+            android:gravity="center"
+            >
+        </TextView>
+    </androidx.appcompat.widget.Toolbar>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/content"
+        android:layout_below="@id/toolbar"
+        android:layout_above="@+id/navigation"
+        android:layout_marginBottom="0dp"
+        android:animateLayoutChanges="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:background="?android:attr/windowBackground"
+        android:fitsSystemWindows="true"
+        app:itemIconTint="@drawable/tab_color"
+        app:itemTextColor="@color/colorBlack"
+        app:labelVisibilityMode="labeled"
+        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
+        app:menu="@menu/navigation_items"/>
+</RelativeLayout>

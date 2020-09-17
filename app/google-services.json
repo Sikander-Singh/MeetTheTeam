@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "992842164000",
+    "firebase_url": "https://meet-the-team-ac5ac.firebaseio.com",
+    "project_id": "meet-the-team-ac5ac",
+    "storage_bucket": "meet-the-team-ac5ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:992842164000:android:87df83a28f84af62c85945",
+        "android_client_info": {
+          "package_name": "com.sikander.meettheteam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "992842164000-ms8ri1i99dilm4rc0fscafgls4h0fio8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGeh7uCPu5cwTi5vuzRGElr6b6Xkk4pdo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "992842164000-ms8ri1i99dilm4rc0fscafgls4h0fio8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

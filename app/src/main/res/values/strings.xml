@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MeetTheTeam</string>
+    <string name="app_name">Meet The Team</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="email">Email</string>
@@ -12,4 +12,19 @@
     <string name="textEmailPassword">Email &amp; Password</string>
     <string name="textVerification">Email has been sent for verification !</string>
     <string name="textResend">Resend</string>
+    <string name="textVerified">Verified !</string>
+    <string name="textLetGetStarted">Let\'s get started</string>
+    <string name="textImageContent">Verified icon</string>
+    <string name="teamMate">Team Mates</string>
+    <string name="profile">Profile</string>
+    <string name="myProfile">My Profile</string>
+    <string name="chat">Chat</string>
+    <string name="content_description_media">Member Profile</string>
+    <string name="textWorkTitle">I am working as a</string>
+    <string name="textIntro">I am....</string>
+    <string name="textInterest">I love....</string>
+    <string name="textDate">I appreciate when my date....</string>
+    <string name="empty">.................</string>
+    <string name="textEdit">Edit Profile</string>
+    <string name="textLogout">Log out</string>
 </resources>
