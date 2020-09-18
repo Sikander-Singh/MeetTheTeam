@@ -11,17 +11,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.sikander.meettheteam.R;
+import com.sikander.meettheteam.model.TeamMember;
+
 import java.util.List;
 
 import static com.sikander.meettheteam.R.drawable.*;
 
 public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.MyViewHolder>{
 
-    //private List<JobClass> jobList;
+    private List<TeamMember> teamList;
     private Context c;
     private View.OnClickListener mClickListener;
-    public MemberListAdapter(List jobList){
-        //this.jobList=jobList;
+    public MemberListAdapter(List list){
+        this.teamList=list;
     }
     @NonNull
     @Override
@@ -31,11 +33,10 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.My
     }
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-       // final JobClass job=jobList.get(position);
-      //  holder.jobName.setText(job.getJobName());
-        holder.memberName.setText("Sikander");
-        holder.memberPosition.setText("Android Engineer");
-        holder.memberIntro.setText("This is sikander singh");
+       final TeamMember member=teamList.get(position);
+        holder.memberName.setText(member.getName());
+        holder.memberPosition.setText(member.getPosition());
+        holder.memberIntro.setText(member.getPersonality());
         holder.memberImage.setImageResource(sikander);
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +47,7 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.My
     }
     @Override
     public int getItemCount() {
-       return 10;
+       return teamList.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
 

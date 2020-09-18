@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import com.sikander.meettheteam.R;
 
 public class MemberActivity extends AppCompatActivity {
-    Button back;
-    ImageView imageView;
+    private Button back;
+    private ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

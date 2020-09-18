@@ -17,9 +17,9 @@ import com.sikander.meettheteam.fragments.ProfileFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
-    BottomNavigationView navigation;
-    Toolbar toolbar;
-    TextView textView;
+    private BottomNavigationView navigation;
+    private Toolbar toolbar;
+    private TextView textView;
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

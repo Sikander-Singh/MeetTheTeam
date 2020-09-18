@@ -7,14 +7,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.sikander.meettheteam.R;
 
 public class RegisterFinalActivity extends AppCompatActivity {
 
-    Button back;
-    Button next;
-    EditText email,password;
+    private Button back;
+    private Button next;
+    private EditText email,password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,14 +33,20 @@ public class RegisterFinalActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String emailStr=email.getText().toString();
-                String passwordStr=password.getText().toString();
-                Intent intent=new Intent(RegisterFinalActivity.this,VerificationActivity.class);
-                intent.putExtra("email",emailStr);
-                intent.putExtra("password",passwordStr);
-                intent.putExtra("full_name",getIntent().getStringExtra("full_name"));
-                intent.putExtra("title",getIntent().getStringExtra("title"));
-                startActivity(intent);
+                if(email.getText().toString().isEmpty() && password.getText().toString().isEmpty()){
+                    Toast.makeText(RegisterFinalActivity.this, "Please fill the empty fields",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    String emailStr=email.getText().toString();
+                    String passwordStr=password.getText().toString();
+                    Intent intent=new Intent(RegisterFinalActivity.this,VerificationActivity.class);
+                    intent.putExtra("email",emailStr);
+                    intent.putExtra("password",passwordStr);
+                    intent.putExtra("full_name",getIntent().getStringExtra("full_name"));
+                    intent.putExtra("title",getIntent().getStringExtra("title"));
+                    startActivity(intent);
+                }
             }
         });
     }

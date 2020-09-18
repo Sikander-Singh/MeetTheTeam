@@ -7,13 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.sikander.meettheteam.R;
 
 public class RegisterTitleActivity extends AppCompatActivity {
-    Button next;
-    Button back;
-    EditText position;
+    private Button next;
+    private Button back;
+    private EditText position;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,11 +24,17 @@ public class RegisterTitleActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(RegisterTitleActivity.this,RegisterFinalActivity.class);
-                String title=position.getText().toString();
-                intent.putExtra("full_name",getIntent().getStringExtra("full_name"));
-                intent.putExtra("title",title);
-                startActivity(intent);
+                if(position.getText().toString().isEmpty()){
+                    Toast.makeText(RegisterTitleActivity.this, "Please fill the empty fields",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent intent=new Intent(RegisterTitleActivity.this,RegisterFinalActivity.class);
+                    String title=position.getText().toString();
+                    intent.putExtra("full_name",getIntent().getStringExtra("full_name"));
+                    intent.putExtra("title",title);
+                    startActivity(intent);
+                }
             }
         });
         back=findViewById(R.id.back);

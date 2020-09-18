@@ -1,14 +1,13 @@
 package com.sikander.meettheteam.model;
 
 public class TeamMember {
-    private int id;
-    private String name,dating_preferences,interests,personality,position,profile_image;
+    private String id,name,dating_preferences,interests,personality,position,profile_image;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

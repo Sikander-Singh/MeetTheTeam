@@ -10,7 +10,7 @@ import com.sikander.meettheteam.R;
 
 public class ViewImageActivity extends AppCompatActivity {
 
-    Button back;
+    private Button back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
