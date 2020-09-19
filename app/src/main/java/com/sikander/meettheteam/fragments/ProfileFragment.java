@@ -2,11 +2,9 @@ package com.sikander.meettheteam.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,13 +26,8 @@ import com.sikander.meettheteam.R;
 import com.sikander.meettheteam.activities.EditActivity;
 import com.sikander.meettheteam.activities.MainActivity;
 import com.sikander.meettheteam.activities.ViewFirebaseImage;
-import com.sikander.meettheteam.activities.ViewImageActivity;
 import com.sikander.meettheteam.model.GlideApp;
 import com.sikander.meettheteam.model.TeamMember;
-import com.squareup.picasso.Picasso;
-
-import java.util.zip.Inflater;
-
 import static com.sikander.meettheteam.R.menu.edit;
 
 public class ProfileFragment extends Fragment {
