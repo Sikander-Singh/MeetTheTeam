@@ -29,5 +29,5 @@
     <string name="textLogout">Log out</string>
     <string name="textIm">I am</string>
     <string name="storagePath">"gs://meet-the-team-ac5ac.appspot.com/"</string>
-    <string name="defaultImage">"gs://meet-the-team-ac5ac.appspot.com/no-photo.png"</string>
+    <string name="defaultImage">"gs://meet-the-team-ac5ac.appspot.com/nophoto.png"</string>
 </resources>

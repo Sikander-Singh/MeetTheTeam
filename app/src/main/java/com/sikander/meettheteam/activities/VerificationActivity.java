@@ -45,16 +45,21 @@ public class VerificationActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAuth.getCurrentUser().reload();
-                if(mAuth.getCurrentUser().isEmailVerified()){
-                    Intent intent=new Intent(VerificationActivity.this,VerifiedActivity.class);
-                    intent.putExtra("object",teamMember);
-                    startActivity(intent);
-                }
-                else{
-                    Toast.makeText(VerificationActivity.this, "Please first verify the email.",
-                            Toast.LENGTH_SHORT).show();
-                }
+                mAuth.getCurrentUser().reload().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(mAuth.getCurrentUser().isEmailVerified()){
+                            Intent intent=new Intent(VerificationActivity.this,VerifiedActivity.class);
+                            intent.putExtra("object",teamMember);
+                            startActivity(intent);
+                        }
+                        else{
+                            Toast.makeText(VerificationActivity.this, "Please first verify the email.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
             }
         });
         resend.setOnClickListener(new View.OnClickListener() {
@@ -63,12 +68,7 @@ public class VerificationActivity extends AppCompatActivity {
                 sendVerification(user);
             }
         });
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
 
-            }
-        });
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override

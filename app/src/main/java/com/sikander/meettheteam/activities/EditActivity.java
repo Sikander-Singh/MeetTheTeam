@@ -31,6 +31,9 @@ import com.sikander.meettheteam.model.GlideApp;
 import com.sikander.meettheteam.model.TeamMember;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 import static java.security.AccessController.getContext;
 
 public class EditActivity extends AppCompatActivity {
@@ -84,23 +87,31 @@ public class EditActivity extends AppCompatActivity {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                TeamMember teamObject = new TeamMember(id, userName.getText().toString(),
-                        userDatePref.getText().toString(),
-                        userInterest.getText().toString(),
-                        userPersonality.getText().toString(),
-                        userPosition.getText().toString(),getString(R.string.storagePath)+id
-                );
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                databaseReference.child("Team").child(id).setValue(teamObject).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(EditActivity.this, "Profile updated",
-                                Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-                });
-
+                if(userName.getText().toString().isEmpty() ||
+                        userDatePref.getText().toString().isEmpty() ||
+                        userInterest.getText().toString().isEmpty() ||
+                        userPersonality.getText().toString().isEmpty() ||
+                        userPosition.getText().toString().isEmpty()){
+                    Toast.makeText(EditActivity.this, "Please fill the empty fields", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    TeamMember teamObject = new TeamMember(id, userName.getText().toString(),
+                            userDatePref.getText().toString(),
+                            userInterest.getText().toString(),
+                            userPersonality.getText().toString(),
+                            userPosition.getText().toString(),getString(R.string.storagePath)+id
+                    );
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                    databaseReference.child("Team").child(id).setValue(teamObject).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(EditActivity.this, "Profile updated",
+                                    Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    });
+                }
             }
         });
         //update
@@ -133,13 +144,17 @@ public class EditActivity extends AppCompatActivity {
             }
         }
     }
-    public void UploadImage(){
+    public void UploadImage() throws IOException {
         if(filePath != null) {
             pd.show();
 
+            Bitmap bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+            byte[] data = baos.toByteArray();
              StorageReference childRef=storageRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
             //uploading the image
-            UploadTask uploadTask = childRef.putFile(filePath);
+            UploadTask uploadTask = childRef.putBytes(data);
 
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
