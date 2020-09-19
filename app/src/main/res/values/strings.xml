@@ -24,7 +24,10 @@
     <string name="textIntro">I am....</string>
     <string name="textInterest">I love....</string>
     <string name="textDate">I appreciate when my date....</string>
-    <string name="empty">.................</string>
+    <string name="empty">Please fill this field....</string>
     <string name="textEdit">Edit Profile</string>
     <string name="textLogout">Log out</string>
+    <string name="textIm">I am</string>
+    <string name="storagePath">"gs://meet-the-team-ac5ac.appspot.com/"</string>
+    <string name="defaultImage">"gs://meet-the-team-ac5ac.appspot.com/no-photo.png"</string>
 </resources>

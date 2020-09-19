@@ -5,28 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.HomeActivity">
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorWhite"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.ActionBar">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/title"
-            android:textSize="20sp"
-            android:textColor="@color/colorGrey"
-            android:text="@string/teamMate"
-            android:gravity="center"
-            >
-        </TextView>
-    </androidx.appcompat.widget.Toolbar>
+
+   <com.google.android.material.appbar.AppBarLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:id="@+id/appBar"
+       >
+       <androidx.appcompat.widget.Toolbar
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:id="@+id/toolbar"
+           >
+       </androidx.appcompat.widget.Toolbar>
+   </com.google.android.material.appbar.AppBarLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/content"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/appBar"
         android:layout_above="@+id/navigation"
         android:layout_marginBottom="0dp"
         android:animateLayoutChanges="true"

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,6 +25,7 @@ import com.sikander.meettheteam.activities.MemberActivity;
 import com.sikander.meettheteam.adapter.MemberListAdapter;
 import com.sikander.meettheteam.model.TeamMember;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,38 +46,42 @@ public class DiscoverFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_discover, container, false);
+        adapter = new MemberListAdapter(list);
+        recyclerView = view.findViewById(R.id.memberViewList);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setAdapter(adapter);
         firebaseDatabase=FirebaseDatabase.getInstance();
         mDatabase= firebaseDatabase.getReference();
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        adapter.setClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int item=recyclerView.getChildLayoutPosition(view);
+                TeamMember teamMember=list.get(item);
+                Intent intent=new Intent(getContext(), MemberActivity.class);
+                intent.putExtra("object",teamMember);
+                startActivity(intent);
+            }
+        });
+        mDatabase.child("Team").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
                  TeamMember object = postSnapshot.getValue(TeamMember.class);
-                 list.add(object);
-
+                 if(object.getId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                     //nothing
+                 }
+                 else{
+                     list.add(object);
+                 }
                 }
-                adapter = new MemberListAdapter(list);
-
+                adapter.notifyDataSetChanged();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-        recyclerView = view.findViewById(R.id.memberViewList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setAdapter(adapter);
-        adapter.setClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(getContext(), MemberActivity.class);
-                startActivity(intent);
-            }
-        });
-
         return view;
-
     }
 }

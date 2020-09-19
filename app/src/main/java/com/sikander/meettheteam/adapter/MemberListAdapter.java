@@ -1,7 +1,10 @@
 package com.sikander.meettheteam.adapter;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +15,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.sikander.meettheteam.R;
 import com.sikander.meettheteam.model.TeamMember;
+import com.squareup.picasso.Picasso;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
-
-import static com.sikander.meettheteam.R.drawable.*;
 
 public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.MyViewHolder>{
 
     private List<TeamMember> teamList;
     private Context c;
     private View.OnClickListener mClickListener;
-    public MemberListAdapter(List list){
+    public MemberListAdapter(List<TeamMember> list){
         this.teamList=list;
     }
     @NonNull
@@ -32,22 +36,39 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.My
         return new MyViewHolder(itemView);
     }
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
        final TeamMember member=teamList.get(position);
         holder.memberName.setText(member.getName());
         holder.memberPosition.setText(member.getPosition());
         holder.memberIntro.setText(member.getPersonality());
-        holder.memberImage.setImageResource(sikander);
+       /* AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    InputStream is = (InputStream) new URL(member.getProfile_image()).getContent();
+                    Drawable d = Drawable.createFromStream(is, "image");
+                    holder.memberImage.setImageDrawable(d);
+                } catch (Exception e) {
+                    System.out.println("Image download error"+e);
+                }
+            }
+        });*/
+        Picasso.get()
+                .load(member.getProfile_image())
+                .placeholder(R.drawable.nophoto)
+                .error(R.drawable.nophoto)
+                .into(holder.memberImage);
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 mClickListener.onClick(view);
             }
         });
     }
     @Override
     public int getItemCount() {
-       return teamList.size();
+       return teamList.size() ;
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
 

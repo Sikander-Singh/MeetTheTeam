@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/layout_member_row"
+        android:layout_marginTop="10dp"
         android:fillViewport="false"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:background="@color/colorWhite"
@@ -125,7 +126,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/memberDateP"
+                            android:id="@+id/memberDatePref"
                             android:layout_marginTop="8dp"
                             android:textSize="12sp"
                             android:text="@string/empty"

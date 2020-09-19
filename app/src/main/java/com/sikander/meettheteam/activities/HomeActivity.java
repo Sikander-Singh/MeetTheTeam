@@ -25,8 +25,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         toolbar = findViewById(R.id.toolbar);
-        textView = findViewById(R.id.title);
+        //textView = findViewById(R.id.title);
         setSupportActionBar(toolbar);
+        toolbar.setSubtitle(R.string.teamMate);
         loadFragment(new DiscoverFragment());
         navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -34,15 +35,18 @@ public class HomeActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem item) {
                 int id = item.getItemId();
                 if(id == R.id.teamMate) {
-                    textView.setText(R.string.teamMate);
+                   // textView.setText(R.string.teamMate);
+                    toolbar.setSubtitle(R.string.teamMate);
                     loadFragment(new DiscoverFragment());
                     return true;
                 } else if(id == R.id.profile) {
-                    textView.setText(R.string.myProfile);
+                    //textView.setText(R.string.myProfile);
+                    toolbar.setSubtitle(R.string.myProfile);
                     loadFragment(new ProfileFragment());
                     return true;
                 } else if(id == R.id.chat) {
-                    textView.setText(R.string.chat);
+                   // textView.setText(R.string.chat);
+                    toolbar.setSubtitle(R.string.chat);
                     loadFragment(new ChatFragment());
                     return true;
                 }

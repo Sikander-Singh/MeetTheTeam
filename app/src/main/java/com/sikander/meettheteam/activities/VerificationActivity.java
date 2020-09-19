@@ -18,6 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.sikander.meettheteam.R;
+import com.sikander.meettheteam.model.TeamMember;
 
 public class VerificationActivity extends AppCompatActivity {
 
@@ -35,6 +36,9 @@ public class VerificationActivity extends AppCompatActivity {
         password=getIntent().getStringExtra("password");
         name=getIntent().getStringExtra("full_name");
         position=getIntent().getStringExtra("title");
+        final TeamMember teamMember=new TeamMember();
+        teamMember.setName(name);
+        teamMember.setPosition(position);
         resend=findViewById(R.id.resend);
         next=findViewById(R.id.next);
         textView=findViewById(R.id.verifiedText);
@@ -44,6 +48,7 @@ public class VerificationActivity extends AppCompatActivity {
                 mAuth.getCurrentUser().reload();
                 if(mAuth.getCurrentUser().isEmailVerified()){
                     Intent intent=new Intent(VerificationActivity.this,VerifiedActivity.class);
+                    intent.putExtra("object",teamMember);
                     startActivity(intent);
                 }
                 else{

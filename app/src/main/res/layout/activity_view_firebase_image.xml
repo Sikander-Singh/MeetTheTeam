@@ -7,16 +7,16 @@
     tools:context=".activities.ViewImageActivity"
     android:background="@color/colorBlack"
     >
-<Button
-    android:layout_width="40dp"
-    android:layout_height="wrap_content"
-    android:id="@+id/back"
-    android:layout_margin="10dp"
-    android:background="@drawable/baseline_keyboard_backspace_24"
-    android:backgroundTint="@color/colorWhite"
-    >
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/back"
+        android:layout_margin="10dp"
+        android:background="@drawable/baseline_keyboard_backspace_24"
+        android:backgroundTint="@color/colorWhite"
+        >
 
-</Button>
+    </Button>
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="400dp"

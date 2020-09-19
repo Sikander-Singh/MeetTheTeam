@@ -23,7 +23,6 @@
                 android:scaleType="centerCrop"
                 android:contentDescription="@string/content_description_media"
                 />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -35,7 +34,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/memberName"
-                    android:text="Sikander"
                     android:textSize="20sp"
                     android:textAppearance="?attr/textAppearanceHeadline6"
                     />
@@ -44,7 +42,6 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/memberPosition"
                     android:layout_marginTop="8dp"
-                    android:text="Android Engineer"
                     android:textSize="16sp"
                     android:textAppearance="?attr/textAppearanceBody2"
                     android:textColor="?android:attr/textColorSecondary"
@@ -52,10 +49,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:text="@string/textIm"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="?android:attr/textColorSecondary"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/memberIntro"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="5dp"
                     android:textSize="12sp"
-                    android:text="I'm very passionate person"
                     android:textAppearance="?attr/textAppearanceBody2"
                     android:textColor="?android:attr/textColorSecondary"
                     />

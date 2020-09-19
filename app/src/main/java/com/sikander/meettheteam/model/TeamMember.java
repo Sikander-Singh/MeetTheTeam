@@ -1,7 +1,29 @@
 package com.sikander.meettheteam.model;
 
-public class TeamMember {
-    private String id,name,dating_preferences,interests,personality,position,profile_image;
+import java.io.Serializable;
+
+public class TeamMember implements Serializable {
+    private String id;
+    private String name;
+    private String dating_preferences;
+    private String interests;
+    private String personality;
+    private String position;
+
+    public TeamMember(){
+        //nothing
+    }
+    public TeamMember(String id,String name, String dating_preferences, String interests, String personality, String position,String profile_image) {
+        this.id=id;
+        this.name = name;
+        this.dating_preferences = dating_preferences;
+        this.interests = interests;
+        this.personality = personality;
+        this.position = position;
+        this.profile_image = profile_image;
+    }
+
+    private String profile_image;
 
     public String getId() {
         return id;

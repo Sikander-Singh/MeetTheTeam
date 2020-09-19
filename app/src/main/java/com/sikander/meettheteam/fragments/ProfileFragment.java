@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -13,26 +12,40 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.sikander.meettheteam.R;
 import com.sikander.meettheteam.activities.EditActivity;
-import com.sikander.meettheteam.activities.HomeActivity;
 import com.sikander.meettheteam.activities.MainActivity;
-import com.sikander.meettheteam.activities.MemberActivity;
+import com.sikander.meettheteam.activities.ViewFirebaseImage;
 import com.sikander.meettheteam.activities.ViewImageActivity;
+import com.sikander.meettheteam.model.GlideApp;
+import com.sikander.meettheteam.model.TeamMember;
+import com.squareup.picasso.Picasso;
 
 import java.util.zip.Inflater;
 
 import static com.sikander.meettheteam.R.menu.edit;
 
 public class ProfileFragment extends Fragment {
-    private String mParam1;
-    private String mParam2;
 
-    ImageView imageView;
+    private ImageView memberImage;
+    private TextView userName,userPosition,userPersonality,userInterest,userDatePref;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
+    private FirebaseAuth mAuth;
+    private StorageReference storageRef ;
+    private  TeamMember object;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -51,6 +64,7 @@ public class ProfileFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.profile_edit) {
             Intent intent=new Intent(getContext(), EditActivity.class);
+            intent.putExtra("object",object);
             startActivity(intent);
         }
         else if(item.getItemId() == R.id.logout){
@@ -63,18 +77,54 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_profile, container, false);
-        imageView=view.findViewById(R.id.memberImage);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        userName=view.findViewById(R.id.memberName);
+        userPosition=view.findViewById(R.id.memberPosition);
+        userPersonality=view.findViewById(R.id.memberIntro);
+        userInterest=view.findViewById(R.id.memberInterest);
+        userDatePref=view.findViewById(R.id.memberDatePref);
+        firebaseDatabase= FirebaseDatabase.getInstance();
+        databaseReference=firebaseDatabase.getReference();
+        mAuth=FirebaseAuth.getInstance();
+        databaseReference.child("Team").child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    object = snapshot.getValue(TeamMember.class);
+                    userName.setText(object.getName());
+                    userPosition.setText(object.getPosition());
+                    userPersonality.setText(object.getPersonality());
+                    userInterest.setText(object.getInterests());
+                    userDatePref.setText(object.getDating_preferences());
+                 //Image path reference from firebase
+                storageRef= FirebaseStorage.getInstance().getReferenceFromUrl(getString(R.string.storagePath)+FirebaseAuth.getInstance().getCurrentUser().getUid());
+               //Image path reference from firebase
+               //load image into the user profile
+                GlideApp.with(getContext())
+                        .load(storageRef)
+                        .skipMemoryCache(true)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .into(memberImage);
+                //load image into the user profile
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        memberImage=view.findViewById(R.id.memberImage);
+        memberImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                imageView.setOnClickListener(new View.OnClickListener() {
+                memberImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent=new Intent(getContext(), ViewImageActivity.class);
+                        Intent intent=new Intent(getContext(), ViewFirebaseImage.class);
+                        intent.putExtra("url",object.getProfile_image());
                         startActivity(intent);
                     }
                 });
