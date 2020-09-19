@@ -2,7 +2,7 @@ package com.sikander.meettheteam.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -29,26 +28,20 @@ import com.google.firebase.storage.UploadTask;
 import com.sikander.meettheteam.R;
 import com.sikander.meettheteam.model.GlideApp;
 import com.sikander.meettheteam.model.TeamMember;
-import com.squareup.picasso.Picasso;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import static java.security.AccessController.getContext;
-
 public class EditActivity extends AppCompatActivity {
-
     private Button back;
     private Button update;
     private EditText userName,userPosition,userPersonality,userInterest,userDatePref;
     private ImageView profileImage;
     private TeamMember teamMember;
-    int PICK_IMAGE_REQUEST = 111;
-    Uri filePath;
-    ProgressDialog pd;
+    private int PICK_IMAGE_REQUEST = 111;
+    private Uri filePath;
+    private ProgressDialog pd;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
-
-    StorageReference storageRef ;
+    private StorageReference storageRef ;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
@@ -61,19 +54,22 @@ public class EditActivity extends AppCompatActivity {
         userInterest = findViewById(R.id.memberInterest);
         userDatePref = findViewById(R.id.memberDatePref);
         profileImage = findViewById(R.id.profileImage);
-
         teamMember = (TeamMember) getIntent().getSerializableExtra("object");
-
         userName.setText(teamMember.getName());
         userPosition.setText(teamMember.getPosition());
         userPersonality.setText(teamMember.getPersonality());
         userInterest.setText(teamMember.getInterests());
         userDatePref.setText(teamMember.getDating_preferences());
         StorageReference ref= FirebaseStorage.getInstance().getReferenceFromUrl(getString(R.string.storagePath)+FirebaseAuth.getInstance().getCurrentUser().getUid());
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(EditActivity.this);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
         GlideApp.with(EditActivity.this)
                                 .load(ref)
-                                .skipMemoryCache(true)
-                                 .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                 .placeholder(circularProgressDrawable)
+                                 .skipMemoryCache(true)
+                                 .diskCacheStrategy(DiskCacheStrategy.ALL.NONE)
                                 .into(profileImage);
         back=findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {

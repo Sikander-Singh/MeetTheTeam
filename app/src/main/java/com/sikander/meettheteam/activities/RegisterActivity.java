@@ -1,7 +1,6 @@
 package com.sikander.meettheteam.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.Toast;
 import com.sikander.meettheteam.R;
 
 public class RegisterActivity extends AppCompatActivity {
-
     private Button next;
     private Button back;
     private EditText fname,lname;

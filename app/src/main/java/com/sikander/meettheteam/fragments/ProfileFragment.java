@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -46,13 +46,17 @@ public class ProfileFragment extends Fragment {
     private FirebaseAuth mAuth;
     private StorageReference storageRef ;
     private  TeamMember object;
+    private CircularProgressDrawable circularProgressDrawable;
     public ProfileFragment() {
         // Required empty public constructor
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        circularProgressDrawable = new CircularProgressDrawable(getContext());
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(30f);
+        circularProgressDrawable.start();
     }
 
     @Override
@@ -89,6 +93,7 @@ public class ProfileFragment extends Fragment {
         firebaseDatabase= FirebaseDatabase.getInstance();
         databaseReference=firebaseDatabase.getReference();
         mAuth=FirebaseAuth.getInstance();
+        storageRef= FirebaseStorage.getInstance().getReferenceFromUrl(getString(R.string.storagePath)+FirebaseAuth.getInstance().getCurrentUser().getUid());
         databaseReference.child("Team").child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -99,14 +104,12 @@ public class ProfileFragment extends Fragment {
                     userPersonality.setText(object.getPersonality());
                     userInterest.setText(object.getInterests());
                     userDatePref.setText(object.getDating_preferences());
-                 //Image path reference from firebase
-                storageRef= FirebaseStorage.getInstance().getReferenceFromUrl(getString(R.string.storagePath)+FirebaseAuth.getInstance().getCurrentUser().getUid());
-               //Image path reference from firebase
                //load image into the user profile
                 GlideApp.with(getContext())
                         .load(storageRef)
                         .skipMemoryCache(true)
                         .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .placeholder(circularProgressDrawable)
                         .into(memberImage);
                 //load image into the user profile
             }

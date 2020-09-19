@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sikander.meettheteam.R;
 import com.sikander.meettheteam.fragments.ChatFragment;
@@ -16,7 +15,6 @@ import com.sikander.meettheteam.fragments.DiscoverFragment;
 import com.sikander.meettheteam.fragments.ProfileFragment;
 
 public class HomeActivity extends AppCompatActivity {
-
     private BottomNavigationView navigation;
     private Toolbar toolbar;
     private TextView textView;

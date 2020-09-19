@@ -1,27 +1,26 @@
 package com.sikander.meettheteam.activities;
 
-        import androidx.annotation.NonNull;
-        import androidx.appcompat.app.AppCompatActivity;
-        import android.content.Intent;
-        import android.os.Bundle;
-        import android.os.Handler;
-        import android.view.View;
-        import android.view.WindowManager;
-        import android.widget.Button;
-        import android.widget.ProgressBar;
-        import android.widget.Toast;
-        import com.google.android.gms.tasks.OnCompleteListener;
-        import com.google.android.gms.tasks.Task;
-        import com.google.android.material.textfield.TextInputEditText;
-        import com.google.firebase.FirebaseApp;
-        import com.google.firebase.auth.AuthResult;
-        import com.google.firebase.auth.FirebaseAuth;
-        import com.google.firebase.auth.FirebaseUser;
-        import com.sikander.meettheteam.R;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.sikander.meettheteam.R;
+
 
 public class MainActivity extends AppCompatActivity {
-
-
     private Button register,login;
     private TextInputEditText email,password;
     private ProgressBar progressBar;
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                         public void run() {
                             LoginVerification();
                         }
-                    }, 3000);
+                    }, 1000);
                 }
 
             }
@@ -110,9 +109,7 @@ public class MainActivity extends AppCompatActivity {
                         getWindowControl();
                     }
                 });
-
     }
-
     private void getWindowControl(){
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
