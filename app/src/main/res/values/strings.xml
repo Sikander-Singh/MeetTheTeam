@@ -30,4 +30,6 @@
     <string name="textIm">I am</string>
     <string name="storagePath">"gs://meet-the-team-ac5ac.appspot.com/"</string>
     <string name="defaultImage">"gs://meet-the-team-ac5ac.appspot.com/nophoto.jpg"</string>
+    <string name="textMessage">Write your message</string>
+    <string name="textMemberMessage">Tap to Chat</string>
 </resources>

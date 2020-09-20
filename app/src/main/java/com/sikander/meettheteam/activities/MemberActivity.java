@@ -17,6 +17,7 @@ public class MemberActivity extends AppCompatActivity {
     private TeamMember teamMember;
     private TextView memberName,memberPosition,memberInto,memberInterest,memberDatingPref;
     private ImageView memberImage;
+    private Button chat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +29,7 @@ public class MemberActivity extends AppCompatActivity {
         memberInto=findViewById(R.id.memberIntro);
         memberInterest=findViewById(R.id.memberInterest);
         memberDatingPref=findViewById(R.id.memberDatePref);
+        chat=findViewById(R.id.chat);
         teamMember= (TeamMember) getIntent().getSerializableExtra("object");
         CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(MemberActivity.this);
         circularProgressDrawable.setStrokeWidth(5f);
@@ -54,6 +56,15 @@ public class MemberActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent=new Intent(MemberActivity.this,ViewImageActivity.class);
                 intent.putExtra("url",teamMember.getProfile_image());
+                startActivity(intent);
+            }
+        });
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MemberActivity.this,ChatActivity.class);
+                intent.putExtra("memberId",teamMember.getId());
+                intent.putExtra("memberName",teamMember.getName());
                 startActivity(intent);
             }
         });

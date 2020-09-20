@@ -23,12 +23,14 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.My
     public MemberListAdapter(List<TeamMember> list){
         this.teamList=list;
     }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.member_card, parent, false);
         return new MyViewHolder(itemView);
     }
+
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
        final TeamMember member=teamList.get(position);
@@ -46,11 +48,11 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.My
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 mClickListener.onClick(view);
             }
         });
     }
+
     @Override
     public int getItemCount() {
        return teamList.size() ;
@@ -71,6 +73,7 @@ public class MemberListAdapter extends RecyclerView.Adapter<MemberListAdapter.My
             circularProgressDrawable = new CircularProgressDrawable(itemView.getContext());
         }
     }
+
     public void setClickListener(View.OnClickListener callback) {
         mClickListener = callback;
     }
