@@ -28,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         FirebaseApp.initializeApp(getApplicationContext());
         mAuth=FirebaseAuth.getInstance();
-        setContentView(R.layout.activity_main);
         register=findViewById(R.id.register);
         login=findViewById(R.id.login);
         email=findViewById(R.id.userEmail);

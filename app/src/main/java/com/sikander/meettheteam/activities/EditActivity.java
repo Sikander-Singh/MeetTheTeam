@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,8 +25,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.sikander.meettheteam.R;
-import com.sikander.meettheteam.model.GlideApp;
 import com.sikander.meettheteam.model.TeamMember;
+import com.squareup.picasso.Picasso;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
@@ -42,12 +41,15 @@ public class EditActivity extends AppCompatActivity {
     private ProgressDialog pd;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef ;
+    private StorageReference downloadRef;
+    private  DatabaseReference databaseReference;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
         pd = new ProgressDialog(this);
         pd.setMessage("Uploading....");
         storageRef= storage.getReferenceFromUrl(getString(R.string.storagePath));
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         userName = findViewById(R.id.memberName);
         userPosition = findViewById(R.id.memberPosition);
         userPersonality = findViewById(R.id.memberIntro);
@@ -60,17 +62,17 @@ public class EditActivity extends AppCompatActivity {
         userPersonality.setText(teamMember.getPersonality());
         userInterest.setText(teamMember.getInterests());
         userDatePref.setText(teamMember.getDating_preferences());
-        StorageReference ref= FirebaseStorage.getInstance().getReferenceFromUrl(getString(R.string.storagePath)+FirebaseAuth.getInstance().getCurrentUser().getUid());
+       //profile image
         CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(EditActivity.this);
         circularProgressDrawable.setStrokeWidth(5f);
         circularProgressDrawable.setCenterRadius(30f);
         circularProgressDrawable.start();
-        GlideApp.with(EditActivity.this)
-                                .load(ref)
-                                 .placeholder(circularProgressDrawable)
-                                 .skipMemoryCache(true)
-                                 .diskCacheStrategy(DiskCacheStrategy.ALL.NONE)
-                                .into(profileImage);
+        Picasso.get()
+                .load(String.valueOf(teamMember.getProfile_image()))
+                .placeholder(circularProgressDrawable)
+                .error(R.drawable.nophoto)
+                .into(profileImage);
+        //profile image
         back=findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,9 +98,8 @@ public class EditActivity extends AppCompatActivity {
                             userDatePref.getText().toString(),
                             userInterest.getText().toString(),
                             userPersonality.getText().toString(),
-                            userPosition.getText().toString(),getString(R.string.storagePath)+id
+                            userPosition.getText().toString(),teamMember.getProfile_image()
                     );
-                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
                     databaseReference.child("Team").child(id).setValue(teamObject).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -140,6 +141,7 @@ public class EditActivity extends AppCompatActivity {
             }
         }
     }
+
     public void UploadImage() throws IOException {
         if(filePath != null) {
             pd.show();
@@ -157,6 +159,14 @@ public class EditActivity extends AppCompatActivity {
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     pd.dismiss();
                     Toast.makeText(EditActivity.this, "Upload successful", Toast.LENGTH_SHORT).show();
+                    downloadRef= storage.getReferenceFromUrl(getString(R.string.storagePath)+teamMember.getId());
+                    downloadRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            teamMember.setProfile_image(task.getResult().toString());
+                            databaseReference.child("Team").child(teamMember.getId()).child("profile_image").setValue(task.getResult().toString());
+                        }
+                    });
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -170,4 +180,4 @@ public class EditActivity extends AppCompatActivity {
             Toast.makeText(EditActivity.this, "Select an image", Toast.LENGTH_SHORT).show();
         }
     }
-    }
+}

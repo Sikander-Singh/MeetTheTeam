@@ -13,31 +13,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.sikander.meettheteam.R;
 import com.sikander.meettheteam.activities.EditActivity;
 import com.sikander.meettheteam.activities.MainActivity;
-import com.sikander.meettheteam.activities.ViewFirebaseImage;
-import com.sikander.meettheteam.model.GlideApp;
+import com.sikander.meettheteam.activities.ViewImageActivity;
 import com.sikander.meettheteam.model.TeamMember;
+import com.squareup.picasso.Picasso;
+
 import static com.sikander.meettheteam.R.menu.edit;
 
 public class ProfileFragment extends Fragment {
-
     private ImageView memberImage;
     private TextView userName,userPosition,userPersonality,userInterest,userDatePref;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
-    private StorageReference storageRef ;
     private  TeamMember object;
     private CircularProgressDrawable circularProgressDrawable;
     public ProfileFragment() {
@@ -86,7 +83,6 @@ public class ProfileFragment extends Fragment {
         firebaseDatabase= FirebaseDatabase.getInstance();
         databaseReference=firebaseDatabase.getReference();
         mAuth=FirebaseAuth.getInstance();
-        storageRef= FirebaseStorage.getInstance().getReferenceFromUrl(getString(R.string.storagePath)+FirebaseAuth.getInstance().getCurrentUser().getUid());
         databaseReference.child("Team").child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -97,14 +93,11 @@ public class ProfileFragment extends Fragment {
                     userPersonality.setText(object.getPersonality());
                     userInterest.setText(object.getInterests());
                     userDatePref.setText(object.getDating_preferences());
-               //load image into the user profile
-                GlideApp.with(getContext())
-                        .load(storageRef)
-                        .skipMemoryCache(true)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                Picasso.get()
+                        .load(String.valueOf(object.getProfile_image()))
                         .placeholder(circularProgressDrawable)
+                        .error(R.drawable.nophoto)
                         .into(memberImage);
-                //load image into the user profile
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -119,7 +112,7 @@ public class ProfileFragment extends Fragment {
                 memberImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent=new Intent(getContext(), ViewFirebaseImage.class);
+                        Intent intent=new Intent(getContext(), ViewImageActivity.class);
                         intent.putExtra("url",object.getProfile_image());
                         startActivity(intent);
                     }

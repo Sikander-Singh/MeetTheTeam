@@ -9,7 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".activities.ViewFirebaseImage"></activity>
         <activity android:name=".activities.EditActivity" />
         <activity android:name=".activities.ViewImageActivity" />
         <activity android:name=".activities.MemberActivity" />

@@ -23,6 +23,7 @@ public class VerificationActivity extends AppCompatActivity {
      private String email,password,name,position;
      private FirebaseAuth mAuth;
      private FirebaseUser user;
+     private TeamMember teamMember;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +33,7 @@ public class VerificationActivity extends AppCompatActivity {
         password=getIntent().getStringExtra("password");
         name=getIntent().getStringExtra("full_name");
         position=getIntent().getStringExtra("title");
-        final TeamMember teamMember=new TeamMember();
+        teamMember=new TeamMember();
         teamMember.setName(name);
         teamMember.setPosition(position);
         resend=findViewById(R.id.resend);
