@@ -17,7 +17,7 @@ import com.sikander.meettheteam.model.TeamMember;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
-public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.MyHolder>  {
+public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.MyViewHolder>  {
     private Context context;
     private List<TeamMember> list;
     private CircularProgressDrawable circularProgressDrawable;
@@ -28,17 +28,17 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.MyHold
 
     @NonNull
     @Override
-    public ChatListAdapter.MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ChatListAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_member, parent, false);
-        return new ChatListAdapter.MyHolder(itemView);
+        return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ChatListAdapter.MyHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ChatListAdapter.MyViewHolder holder, int position) {
         final TeamMember teamMember=list.get(position);
-        holder.memberMessage.setText(teamMember.getName());
-        holder.memberMessage.setText("Tap to pen");
+        holder.memberName.setText(teamMember.getName());
+        circularProgressDrawable=new CircularProgressDrawable(context);
         circularProgressDrawable.setStrokeWidth(5f);
         circularProgressDrawable.setCenterRadius(30f);
         circularProgressDrawable.start();
@@ -51,8 +51,8 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.MyHold
             @Override
             public void onClick(View v) {
                 Intent screen=new Intent(context, ChatActivity.class);
-                screen.putExtra("userName",teamMember.getName());
-                screen.putExtra("userId",teamMember.getId());
+                screen.putExtra("memberName",teamMember.getName());
+                screen.putExtra("memberId",teamMember.getId());
                 context.startActivity(screen);
             }
         });
@@ -63,19 +63,16 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.MyHold
         return list.size();
     }
 
-    public class MyHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView memberName,memberMessage;
         ImageView memberImage;
         RelativeLayout layout;
-        public MyHolder(View itemView) {
+        public MyViewHolder(View itemView) {
             super(itemView);
             memberName =itemView.findViewById(R.id.memberName);
             memberMessage=itemView.findViewById(R.id.memberMessage);
-            memberImage=itemView.findViewById(R.id.memberMessage);
+            memberImage=itemView.findViewById(R.id.memberImage);
             layout=itemView.findViewById(R.id.member_list_layout);
         }
     }
-
-
-
 }

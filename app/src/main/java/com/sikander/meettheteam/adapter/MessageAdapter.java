@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.sikander.meettheteam.R;
 import com.sikander.meettheteam.model.MessageClass;
+
+import java.util.Date;
 import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHolder> {
@@ -17,21 +19,18 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
     public MessageAdapter(List<MessageClass> chatList) {
         this.chatList = chatList;
     }
-
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.message, parent, false);
         return new MyViewHolder(itemView);
     }
-
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         MessageClass chatMessage=chatList.get(position);
-        holder.memberName.setText(chatMessage.getMessageUser());
-        holder.memberMessage.setText(chatMessage.getMessageText());
-        holder.memberMessageTime.setText(String.valueOf(chatMessage.getMessageTime()));
+        holder.memberName.setText(chatMessage.getUser());
+        holder.memberMessage.setText(chatMessage.getMessage());
+        holder.memberMessageTime.setText(new Date(chatMessage.getTime()).toString());
     }
-
     @Override
     public int getItemCount() {
         return chatList.size();

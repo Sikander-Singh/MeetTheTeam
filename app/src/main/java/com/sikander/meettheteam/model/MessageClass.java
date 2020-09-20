@@ -1,50 +1,51 @@
 package com.sikander.meettheteam.model;
+import java.io.Serializable;
 import java.util.Date;
 
-public class MessageClass {
-    private String messageId;
-    private String messageText;
-    private String messageUser;
-    private long messageTime;
+public class MessageClass implements Serializable {
+    private String id;
+    private String message;
+    private String user;
+    private long time;
     public MessageClass() {
     }
 
-    public MessageClass(String messageId, String messageText, String messageUser) {
-        this.messageId = messageId;
-        this.messageText = messageText;
-        this.messageUser = messageUser;
-        this.messageTime = new Date().getTime();
+    public String getId() {
+        return id;
     }
 
-    public String getMessageId() {
-        return messageId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setMessageId(String messageId) {
-        this.messageId = messageId;
+    public String getMessage() {
+        return message;
     }
 
-    public String getMessageText() {
-        return messageText;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public void setMessageText(String messageText) {
-        this.messageText = messageText;
+    public String getUser() {
+        return user;
     }
 
-    public String getMessageUser() {
-        return messageUser;
+    public void setUser(String user) {
+        this.user = user;
     }
 
-    public void setMessageUser(String messageUser) {
-        this.messageUser = messageUser;
+    public long getTime() {
+        return time;
     }
 
-    public long getMessageTime() {
-        return messageTime;
+    public void setTime(long time) {
+        this.time = time;
     }
 
-    public void setMessageTime(long messageTime) {
-        this.messageTime = messageTime;
+    public MessageClass(String id, String message, String user, long time) {
+        this.id = id;
+        this.message = message;
+        this.user = user;
+        this.time = time;
     }
 }

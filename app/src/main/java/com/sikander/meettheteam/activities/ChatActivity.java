@@ -27,6 +27,7 @@ import com.sikander.meettheteam.model.MessageClass;
 import com.sikander.meettheteam.model.TeamMember;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
@@ -64,19 +65,18 @@ public class ChatActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    MessageClass chatMessage = snapshot.getValue(MessageClass.class);
-                    if (chatMessage.getMessageId()==null) {
+                    MessageClass chatMessage = dataSnapshot.getValue(MessageClass.class);
+                    if (chatMessage.getId()==null) {
                         //nothing
                     } else {
-                        if (chatMessage.getMessageId().contains(memberId + FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                        if (chatMessage.getId().contains(memberId + FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                             list.add(chatMessage);
                             messageAdapter.notifyDataSetChanged();
-                        } else if (chatMessage.getMessageId().contains(FirebaseAuth.getInstance().getCurrentUser().getUid() + memberId)) {
+                        } else if (chatMessage.getId().contains(FirebaseAuth.getInstance().getCurrentUser().getUid()+memberId)) {
                             list.add(chatMessage);
                             messageAdapter.notifyDataSetChanged();
                         }
                     }
-
                 }
             }
 
@@ -85,7 +85,7 @@ public class ChatActivity extends AppCompatActivity {
                 Toast.makeText(ChatActivity.this, "Server error! Unable to get messages.", Toast.LENGTH_SHORT).show();
             }
         });
-        ref.child("Team").orderByChild("userId").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+        ref.child("Team").orderByChild("id").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -98,7 +98,7 @@ public class ChatActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(ChatActivity.this, "Server error!", Toast.LENGTH_SHORT).show();
+                //
             }
         });
 
@@ -113,10 +113,11 @@ public class ChatActivity extends AppCompatActivity {
                         .getReference()
                         .child("Messages")
                         .push()
-                        .setValue(new MessageClass(memberId + FirebaseAuth.getInstance().getCurrentUser().getUid(),input.getText().toString(),myName)
+                        .setValue(new MessageClass(memberId + FirebaseAuth.getInstance().getCurrentUser().getUid(),input.getText().toString(),myName,new Date().getTime())
                         );
                 // Clear the input
                 input.setText("");
+                messageAdapter.notifyDataSetChanged();
             }
         });
         back=findViewById(R.id.back);

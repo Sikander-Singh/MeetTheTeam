@@ -1,9 +1,5 @@
 package com.sikander.meettheteam.model;
 
-import android.net.Uri;
-
-import com.google.android.gms.tasks.Task;
-
 import java.io.Serializable;
 
 public class TeamMember implements Serializable {
